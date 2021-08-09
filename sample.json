@@ -1,0 +1,26 @@
+{
+  "sentences": [{ "trans": "Hi", "orig": "Hallo", "backend": 1 }],
+  "dict": [
+    {
+      "pos": "noun",
+      "terms": ["halloo"],
+      "entry": [
+        {
+          "word": "halloo",
+          "reverse_translation": ["Hallo", "Horrido", "Halloruf"],
+          "score": 1.3212133e-5
+        }
+      ],
+      "base_form": "Hallo",
+      "pos_enum": 1
+    }
+  ],
+  "src": "de",
+  "confidence": 0.93561107,
+  "spell": {},
+  "ld_result": {
+    "srclangs": ["de"],
+    "srclangs_confidences": [0.93561107],
+    "extended_srclangs": ["de"]
+  }
+}
