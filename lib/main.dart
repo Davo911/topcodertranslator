@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
 
 void main() {
   runApp(MyApp());
 }
 
-Future<http.Response> request_translation(String language, String text) async {
+Future<String> loadAPIkey() async {
+  return await rootBundle.loadString('assets/keys/api-key.txt');
+}
+
+Future<http.Response> request_translation(
+    String language, String text, String key) async {
   print("fetching..");
   final response = await http.get(Uri.parse(
-      'https://translation.googleapis.com/language/translate/v2?target=${language}&key=AIzaSyCvBxhLZc8tjqKoVuejptU1gXRdRrj2zbc&q=${text}'));
+      'https://translation.googleapis.com/language/translate/v2?target=${language}&key=${key}&q=${text}'));
   //https://jsonplaceholder.typicode.com/albums/1
 
   if (response.statusCode == 200) {
@@ -70,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> _languages = ['en', 'de', 'hu', 'vi'];
   String _dropdownValue = "hu";
   String translation = "";
+  String key = "";
   @override
   void initState() {
     super.initState();
@@ -141,8 +149,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     print('Button pressed ...');
+                    key = await loadAPIkey();
                     var res = await request_translation(
-                        _dropdownValue, textController.text);
+                        _dropdownValue, textController.text, key);
                     Map<String, dynamic> JSONresponse = jsonDecode(res.body);
                     print(JSONresponse);
                     setState(() {
